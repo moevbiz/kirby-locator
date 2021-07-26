@@ -8,6 +8,7 @@ Kirby::plugin('sylvainjule/locator', array(
 		'geocoding'    => 'nominatim',
 		'display'      => array('lat','lon','number','address','postcode','city','country'),
 		'draggable'    => true,
+		'clickable'	   => false,
 		'autocomplete' => true,
 		'zoom.min'     => 2,
 		'zoom.default' => 12,
