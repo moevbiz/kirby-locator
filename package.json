@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel watch src/index.js --no-source-maps -d ./",
-    "build": "parcel build src/index.js --no-source-maps --experimental-scope-hoisting -d ./"
+    "build": "parcel build src/index.js --no-source-maps -d ./"
   },
   "posthtml": {
     "recognizeSelfClosing": true
@@ -18,15 +18,16 @@
     "not ie <= 11"
   ],
   "devDependencies": {
+    "@parcel/transformer-vue": "^2.0.0-beta.2",
     "@vue/component-compiler-utils": "^3.2.0",
     "cssnano": "^4.1.10",
-    "leaflet": "^1.7.1",
-    "parcel-bundler": "^1.12.5",
+    "leaflet": "1.7.0",
+    "leaflet.locatecontrol": "^0.73.0",
+    "parcel-bundler": "^1.12.3",
     "sass": "^1.29.0",
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "leaflet.locatecontrol": "^0.74.0",
     "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4"
   }
