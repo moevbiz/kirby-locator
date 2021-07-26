@@ -21,10 +21,12 @@
     "@vue/component-compiler-utils": "^3.2.0",
     "cssnano": "^4.1.10",
     "leaflet": "^1.7.1",
+    "parcel-bundler": "^1.12.5",
     "sass": "^1.29.0",
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
+    "leaflet.locatecontrol": "^0.74.0",
     "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4"
   }
