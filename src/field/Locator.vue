@@ -69,7 +69,6 @@ export default {
             dropdownOptions: [],
             filledStatus: 'closed',
             dragged: false,
-            // ADDED
             clicked: false,
         }
     },
@@ -86,7 +85,6 @@ export default {
         liststyle:    String,
         liststyle:    String,
         draggable:    Boolean,
-        // ADDED
         clickable:    Boolean,
         autocomplete: Boolean,
         language:     [String, Boolean],
@@ -260,7 +258,6 @@ export default {
                 });
             }
 
-            // ADDED
             this.locator = L.control.locate({
                 position: 'topright',
                 strings: {
@@ -307,7 +304,6 @@ export default {
                 }, 500)
             }
 
-            // ADDED
             if (this.clickable) {
                 this.map.on('click', (e) => {
                     setloc(e);
@@ -321,7 +317,6 @@ export default {
                 if(this.marker) {
                     if(this.valueExists) {
                         this.marker.setLatLng(this.coords)
-                        // ADDED
                         if(!this.dragged && !this.clicked) this.toggle('closed')
                     }
                     else {
@@ -333,7 +328,6 @@ export default {
                 // If a marker should be created
                 else if(!this.marker && this.valueExists) {
                     this.setMarker()
-                    // ADDED
                     if(!this.dragged && !this.clicked) this.toggle('closed')
                 }
 
@@ -482,7 +476,6 @@ export default {
                 this.map.scrollWheelZoom.enable()
                 this.map.dragging.enable()
                 this.map.touchZoom.enable()
-                // ADDED
                 if (!this.clickable) this.map.doubleClickZoom.enable()
                 this.map.boxZoom.enable()
                 this.map.keyboard.enable()
