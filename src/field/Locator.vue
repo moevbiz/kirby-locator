@@ -55,6 +55,7 @@
 
 <script>
 import L from "leaflet"
+import "leaflet.locatecontrol";
 
 export default {
     data() {
@@ -67,7 +68,9 @@ export default {
             limit: 1,
             dropdownOptions: [],
             filledStatus: 'closed',
-            dragged: false
+            dragged: false,
+            // ADDED
+            clicked: false,
         }
     },
     props: {
@@ -83,6 +86,8 @@ export default {
         liststyle:    String,
         liststyle:    String,
         draggable:    Boolean,
+        // ADDED
+        clickable:    Boolean,
         autocomplete: Boolean,
         language:     [String, Boolean],
 
@@ -254,6 +259,61 @@ export default {
                     }, 500)
                 });
             }
+
+            // ADDED
+            this.locator = L.control.locate({
+                position: 'topright',
+                strings: {
+                    title: "Show me where I am, yo!"
+                },
+                locateOptions: {
+                    enableHighAccuracy: true
+                },
+                icon: "pin-icon",
+                showPopup: false,
+                drawMarker: false,
+            })
+            // this.map.addControl(this.locator)
+            //
+            this.map.on('locationfound', (e) => {
+                
+            })
+
+            let setloc = (e) => {
+                let _this    = this
+                this.coords = e.latlng;
+                this.value = {
+                    'lat': parseFloat(e.latlng.lat),
+                    'lon': parseFloat(e.latlng.lng),
+                    'number': null,
+                    'city': null,
+                    'country': null,
+                    'postcode': null,
+                    'address': null,
+                }
+
+                if(this.saveZoom) {
+                    this.value = {
+                        ...this.value,
+                        'zoom': this.map.getZoom()
+                    }
+                }
+
+                this.$emit("input", this.value)
+
+                this.clicked = true
+                setTimeout(() => {
+                    _this.clicked = false
+                }, 500)
+            }
+
+            // ADDED
+            if (this.clickable) {
+                this.map.on('click', (e) => {
+                    setloc(e);
+                })
+            }
+
         },
         updateMap() {
             if(this.map) {
@@ -261,7 +321,8 @@ export default {
                 if(this.marker) {
                     if(this.valueExists) {
                         this.marker.setLatLng(this.coords)
-                        if(!this.dragged) this.toggle('closed')
+                        // ADDED
+                        if(!this.dragged && !this.clicked) this.toggle('closed')
                     }
                     else {
                         this.map.removeLayer(this.marker)
@@ -272,7 +333,8 @@ export default {
                 // If a marker should be created
                 else if(!this.marker && this.valueExists) {
                     this.setMarker()
-                    if(!this.dragged) this.toggle('closed')
+                    // ADDED
+                    if(!this.dragged && !this.clicked) this.toggle('closed')
                 }
 
                 // If there is a filled value
@@ -420,7 +482,8 @@ export default {
                 this.map.scrollWheelZoom.enable()
                 this.map.dragging.enable()
                 this.map.touchZoom.enable()
-                this.map.doubleClickZoom.enable()
+                // ADDED
+                if (!this.clickable) this.map.doubleClickZoom.enable()
                 this.map.boxZoom.enable()
                 this.map.keyboard.enable()
                 if (this.map.tap) this.map.tap.enable()
