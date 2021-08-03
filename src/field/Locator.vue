@@ -104,10 +104,10 @@ export default {
             return 'map-'+ this._uid
         },
         icon() {
-            return L.icon({
-                iconUrl: this.markerUrl,
-                iconSize: [40, 47],
-                iconAnchor: [20, 47],
+            return L.divIcon({
+                className: 'marker-div-icon',
+                iconSize: [20, 20],
+                // iconAnchor: [20, 20],
             })
         },
         valueExists() {
